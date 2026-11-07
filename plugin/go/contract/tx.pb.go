@@ -808,6 +808,102 @@ func (x *MessageFinalizeRequest) GetBaseSettlementTxHash() []byte {
 	return nil
 }
 
+// MessageSubmitQuorumSignature lets an active validator attest to the exact
+// digest Base will verify. The outer Canopy transaction authenticates the
+// observer; signature is a second BDN/BLS signature over message (normally the
+// 32-byte Base digest) so shares can be aggregated and exported to Base.
+type MessageSubmitQuorumSignature struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ObserverAddress []byte                 `protobuf:"bytes,1,opt,name=observer_address,json=observerAddress,proto3" json:"observer_address,omitempty"`
+	ProofKind       string                 `protobuf:"bytes,2,opt,name=proof_kind,json=proofKind,proto3" json:"proof_kind,omitempty"`
+	ProofId         []byte                 `protobuf:"bytes,3,opt,name=proof_id,json=proofId,proto3" json:"proof_id,omitempty"`
+	Digest          []byte                 `protobuf:"bytes,4,opt,name=digest,proto3" json:"digest,omitempty"`
+	Message         []byte                 `protobuf:"bytes,5,opt,name=message,proto3" json:"message,omitempty"`
+	ValidatorSetId  uint64                 `protobuf:"varint,6,opt,name=validator_set_id,json=validatorSetId,proto3" json:"validator_set_id,omitempty"`
+	Signature       []byte                 `protobuf:"bytes,7,opt,name=signature,proto3" json:"signature,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *MessageSubmitQuorumSignature) Reset() {
+	*x = MessageSubmitQuorumSignature{}
+	mi := &file_tx_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MessageSubmitQuorumSignature) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MessageSubmitQuorumSignature) ProtoMessage() {}
+
+func (x *MessageSubmitQuorumSignature) ProtoReflect() protoreflect.Message {
+	mi := &file_tx_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MessageSubmitQuorumSignature.ProtoReflect.Descriptor instead.
+func (*MessageSubmitQuorumSignature) Descriptor() ([]byte, []int) {
+	return file_tx_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *MessageSubmitQuorumSignature) GetObserverAddress() []byte {
+	if x != nil {
+		return x.ObserverAddress
+	}
+	return nil
+}
+
+func (x *MessageSubmitQuorumSignature) GetProofKind() string {
+	if x != nil {
+		return x.ProofKind
+	}
+	return ""
+}
+
+func (x *MessageSubmitQuorumSignature) GetProofId() []byte {
+	if x != nil {
+		return x.ProofId
+	}
+	return nil
+}
+
+func (x *MessageSubmitQuorumSignature) GetDigest() []byte {
+	if x != nil {
+		return x.Digest
+	}
+	return nil
+}
+
+func (x *MessageSubmitQuorumSignature) GetMessage() []byte {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *MessageSubmitQuorumSignature) GetValidatorSetId() uint64 {
+	if x != nil {
+		return x.ValidatorSetId
+	}
+	return 0
+}
+
+func (x *MessageSubmitQuorumSignature) GetSignature() []byte {
+	if x != nil {
+		return x.Signature
+	}
+	return nil
+}
+
 // FeeParams is the parameter space that defines various amounts for transaction fees
 type FeeParams struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -818,7 +914,7 @@ type FeeParams struct {
 
 func (x *FeeParams) Reset() {
 	*x = FeeParams{}
-	mi := &file_tx_proto_msgTypes[9]
+	mi := &file_tx_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -830,7 +926,7 @@ func (x *FeeParams) String() string {
 func (*FeeParams) ProtoMessage() {}
 
 func (x *FeeParams) ProtoReflect() protoreflect.Message {
-	mi := &file_tx_proto_msgTypes[9]
+	mi := &file_tx_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -843,7 +939,7 @@ func (x *FeeParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeeParams.ProtoReflect.Descriptor instead.
 func (*FeeParams) Descriptor() ([]byte, []int) {
-	return file_tx_proto_rawDescGZIP(), []int{9}
+	return file_tx_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *FeeParams) GetSendFee() uint64 {
@@ -867,7 +963,7 @@ type Signature struct {
 
 func (x *Signature) Reset() {
 	*x = Signature{}
-	mi := &file_tx_proto_msgTypes[10]
+	mi := &file_tx_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -879,7 +975,7 @@ func (x *Signature) String() string {
 func (*Signature) ProtoMessage() {}
 
 func (x *Signature) ProtoReflect() protoreflect.Message {
-	mi := &file_tx_proto_msgTypes[10]
+	mi := &file_tx_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -892,7 +988,7 @@ func (x *Signature) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Signature.ProtoReflect.Descriptor instead.
 func (*Signature) Descriptor() ([]byte, []int) {
-	return file_tx_proto_rawDescGZIP(), []int{10}
+	return file_tx_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Signature) GetPublicKey() []byte {
@@ -995,7 +1091,16 @@ const file_tx_proto_rawDesc = "" +
 	"\x10observer_address\x18\x01 \x01(\fR\x0fobserverAddress\x12\x1d\n" +
 	"\n" +
 	"request_id\x18\x02 \x01(\tR\trequestId\x125\n" +
-	"\x17base_settlement_tx_hash\x18\x03 \x01(\fR\x14baseSettlementTxHash\"&\n" +
+	"\x17base_settlement_tx_hash\x18\x03 \x01(\fR\x14baseSettlementTxHash\"\xfd\x01\n" +
+	"\x1cMessageSubmitQuorumSignature\x12)\n" +
+	"\x10observer_address\x18\x01 \x01(\fR\x0fobserverAddress\x12\x1d\n" +
+	"\n" +
+	"proof_kind\x18\x02 \x01(\tR\tproofKind\x12\x19\n" +
+	"\bproof_id\x18\x03 \x01(\fR\aproofId\x12\x16\n" +
+	"\x06digest\x18\x04 \x01(\fR\x06digest\x12\x18\n" +
+	"\amessage\x18\x05 \x01(\fR\amessage\x12(\n" +
+	"\x10validator_set_id\x18\x06 \x01(\x04R\x0evalidatorSetId\x12\x1c\n" +
+	"\tsignature\x18\a \x01(\fR\tsignature\"&\n" +
 	"\tFeeParams\x12\x19\n" +
 	"\bsend_fee\x18\x01 \x01(\x04R\asendFee\"H\n" +
 	"\tSignature\x12\x1d\n" +
@@ -1015,24 +1120,25 @@ func file_tx_proto_rawDescGZIP() []byte {
 	return file_tx_proto_rawDescData
 }
 
-var file_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_tx_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_tx_proto_goTypes = []any{
-	(*Transaction)(nil),                 // 0: types.Transaction
-	(*MessageObserveEnclave)(nil),       // 1: types.MessageObserveEnclave
-	(*MessageRevokeEnclave)(nil),        // 2: types.MessageRevokeEnclave
-	(*MessageRegisterServicer)(nil),     // 3: types.MessageRegisterServicer
-	(*MessageUpdateServicer)(nil),       // 4: types.MessageUpdateServicer
-	(*MessageObserveAuthorization)(nil), // 5: types.MessageObserveAuthorization
-	(*MessageSubmitExecution)(nil),      // 6: types.MessageSubmitExecution
-	(*MessageReassignRequest)(nil),      // 7: types.MessageReassignRequest
-	(*MessageFinalizeRequest)(nil),      // 8: types.MessageFinalizeRequest
-	(*FeeParams)(nil),                   // 9: types.FeeParams
-	(*Signature)(nil),                   // 10: types.Signature
-	(*anypb.Any)(nil),                   // 11: google.protobuf.Any
+	(*Transaction)(nil),                  // 0: types.Transaction
+	(*MessageObserveEnclave)(nil),        // 1: types.MessageObserveEnclave
+	(*MessageRevokeEnclave)(nil),         // 2: types.MessageRevokeEnclave
+	(*MessageRegisterServicer)(nil),      // 3: types.MessageRegisterServicer
+	(*MessageUpdateServicer)(nil),        // 4: types.MessageUpdateServicer
+	(*MessageObserveAuthorization)(nil),  // 5: types.MessageObserveAuthorization
+	(*MessageSubmitExecution)(nil),       // 6: types.MessageSubmitExecution
+	(*MessageReassignRequest)(nil),       // 7: types.MessageReassignRequest
+	(*MessageFinalizeRequest)(nil),       // 8: types.MessageFinalizeRequest
+	(*MessageSubmitQuorumSignature)(nil), // 9: types.MessageSubmitQuorumSignature
+	(*FeeParams)(nil),                    // 10: types.FeeParams
+	(*Signature)(nil),                    // 11: types.Signature
+	(*anypb.Any)(nil),                    // 12: google.protobuf.Any
 }
 var file_tx_proto_depIdxs = []int32{
-	11, // 0: types.Transaction.msg:type_name -> google.protobuf.Any
-	10, // 1: types.Transaction.signature:type_name -> types.Signature
+	12, // 0: types.Transaction.msg:type_name -> google.protobuf.Any
+	11, // 1: types.Transaction.signature:type_name -> types.Signature
 	2,  // [2:2] is the sub-list for method output_type
 	2,  // [2:2] is the sub-list for method input_type
 	2,  // [2:2] is the sub-list for extension type_name
@@ -1051,7 +1157,7 @@ func file_tx_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_tx_proto_rawDesc), len(file_tx_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

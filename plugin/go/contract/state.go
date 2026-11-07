@@ -19,12 +19,15 @@ var (
 	settlementPrefix  = []byte{104}
 	observationPrefix = []byte{105}
 	blockAnchorPrefix = []byte{106}
+	quorumProofPrefix = []byte{107}
+	quorumSharePrefix = []byte{108}
 )
 
-func EnclavePrefix() []byte    { return JoinLenPrefix(enclavePrefix) }
-func ServicerPrefix() []byte   { return JoinLenPrefix(servicerPrefix) }
-func RequestPrefix() []byte    { return JoinLenPrefix(requestPrefix) }
-func SettlementPrefix() []byte { return JoinLenPrefix(settlementPrefix) }
+func EnclavePrefix() []byte     { return JoinLenPrefix(enclavePrefix) }
+func ServicerPrefix() []byte    { return JoinLenPrefix(servicerPrefix) }
+func RequestPrefix() []byte     { return JoinLenPrefix(requestPrefix) }
+func SettlementPrefix() []byte  { return JoinLenPrefix(settlementPrefix) }
+func QuorumProofPrefix() []byte { return JoinLenPrefix(quorumProofPrefix) }
 
 func KeyForAccount(address []byte) []byte   { return JoinLenPrefix(accountPrefix, address) }
 func KeyForValidator(address []byte) []byte { return JoinLenPrefix(validatorPrefix, address) }
@@ -50,6 +53,15 @@ func ObservationSubjectPrefix(kind byte, subjectHash []byte) []byte {
 	return JoinLenPrefix(observationPrefix, []byte{kind}, subjectHash)
 }
 func KeyForBlockAnchor() []byte { return JoinLenPrefix(blockAnchorPrefix) }
+func KeyForQuorumProof(proofID []byte) []byte {
+	return JoinLenPrefix(quorumProofPrefix, proofID)
+}
+func KeyForQuorumShare(proofID, observer []byte) []byte {
+	return JoinLenPrefix(quorumSharePrefix, proofID, observer)
+}
+func QuorumShareProofPrefix(proofID []byte) []byte {
+	return JoinLenPrefix(quorumSharePrefix, proofID)
+}
 
 func (c *Contract) read(key []byte, destination proto.Message) (bool, *PluginError) {
 	response, err := c.plugin.StateRead(c, &PluginStateReadRequest{Keys: []*PluginKeyRead{{QueryId: 1, Key: key}}})

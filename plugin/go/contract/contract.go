@@ -8,14 +8,15 @@ import (
 )
 
 const (
-	MessageObserveEnclaveName       = "takusenObserveEnclave"
-	MessageRevokeEnclaveName        = "takusenRevokeEnclave"
-	MessageRegisterServicerName     = "takusenRegisterServicer"
-	MessageUpdateServicerName       = "takusenUpdateServicer"
-	MessageObserveAuthorizationName = "takusenObserveAuthorization"
-	MessageSubmitExecutionName      = "takusenSubmitExecution"
-	MessageReassignRequestName      = "takusenReassignRequest"
-	MessageFinalizeRequestName      = "takusenFinalizeRequest"
+	MessageObserveEnclaveName        = "takusenObserveEnclave"
+	MessageRevokeEnclaveName         = "takusenRevokeEnclave"
+	MessageRegisterServicerName      = "takusenRegisterServicer"
+	MessageUpdateServicerName        = "takusenUpdateServicer"
+	MessageObserveAuthorizationName  = "takusenObserveAuthorization"
+	MessageSubmitExecutionName       = "takusenSubmitExecution"
+	MessageReassignRequestName       = "takusenReassignRequest"
+	MessageFinalizeRequestName       = "takusenFinalizeRequest"
+	MessageSubmitQuorumSignatureName = "takusenSubmitQuorumSignature"
 )
 
 var ContractConfig = &PluginConfig{
@@ -31,6 +32,7 @@ var ContractConfig = &PluginConfig{
 		MessageSubmitExecutionName,
 		MessageReassignRequestName,
 		MessageFinalizeRequestName,
+		MessageSubmitQuorumSignatureName,
 	},
 	TransactionTypeUrls: []string{
 		"type.googleapis.com/types.MessageObserveEnclave",
@@ -41,10 +43,12 @@ var ContractConfig = &PluginConfig{
 		"type.googleapis.com/types.MessageSubmitExecution",
 		"type.googleapis.com/types.MessageReassignRequest",
 		"type.googleapis.com/types.MessageFinalizeRequest",
+		"type.googleapis.com/types.MessageSubmitQuorumSignature",
 	},
 	CustomStatePrefixes: [][]byte{
 		enclavePrefix, servicerPrefix, requestPrefix, executionPrefix,
 		settlementPrefix, observationPrefix, blockAnchorPrefix,
+		quorumProofPrefix, quorumSharePrefix,
 	},
 }
 
@@ -116,6 +120,8 @@ func (c *Contract) CheckTx(request *PluginCheckRequest) *PluginCheckResponse {
 		signer, err = checkReassignRequest(message)
 	case *MessageFinalizeRequest:
 		signer, err = checkFinalizeRequest(message)
+	case *MessageSubmitQuorumSignature:
+		signer, err = checkSubmitQuorumSignature(message)
 	default:
 		return &PluginCheckResponse{Error: ErrInvalidMessageCast()}
 	}
@@ -147,6 +153,8 @@ func (c *Contract) DeliverTx(request *PluginDeliverRequest) *PluginDeliverRespon
 		return c.deliverReassignRequest(request.Height, message)
 	case *MessageFinalizeRequest:
 		return c.deliverFinalizeRequest(request.Height, message)
+	case *MessageSubmitQuorumSignature:
+		return c.deliverSubmitQuorumSignature(request.Height, message)
 	default:
 		return &PluginDeliverResponse{Error: ErrInvalidMessageCast()}
 	}

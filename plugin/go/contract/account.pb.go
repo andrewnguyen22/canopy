@@ -1055,6 +1055,286 @@ func (x *BlockAnchor) GetPreviousBlockHash() []byte {
 	return nil
 }
 
+// QuorumProof is the finalized, Base-consumable BDN proof for one exact
+// domain-separated digest. Public keys and signatures retain Canopy's compact
+// encoding while the EIP-2537 fields use the uncompressed 64-byte-coordinate
+// encoding expected by the Base precompiles.
+type QuorumProofMember struct {
+	state                    protoimpl.MessageState `protogen:"open.v1"`
+	Address                  []byte                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	PublicKey                []byte                 `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	WeightedPublicKeyEip2537 []byte                 `protobuf:"bytes,3,opt,name=weighted_public_key_eip2537,json=weightedPublicKeyEip2537,proto3" json:"weighted_public_key_eip2537,omitempty"`
+	Weight                   uint64                 `protobuf:"varint,4,opt,name=weight,proto3" json:"weight,omitempty"`
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *QuorumProofMember) Reset() {
+	*x = QuorumProofMember{}
+	mi := &file_account_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QuorumProofMember) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuorumProofMember) ProtoMessage() {}
+
+func (x *QuorumProofMember) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuorumProofMember.ProtoReflect.Descriptor instead.
+func (*QuorumProofMember) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *QuorumProofMember) GetAddress() []byte {
+	if x != nil {
+		return x.Address
+	}
+	return nil
+}
+
+func (x *QuorumProofMember) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *QuorumProofMember) GetWeightedPublicKeyEip2537() []byte {
+	if x != nil {
+		return x.WeightedPublicKeyEip2537
+	}
+	return nil
+}
+
+func (x *QuorumProofMember) GetWeight() uint64 {
+	if x != nil {
+		return x.Weight
+	}
+	return 0
+}
+
+type QuorumProof struct {
+	state                     protoimpl.MessageState `protogen:"open.v1"`
+	ProofKind                 string                 `protobuf:"bytes,1,opt,name=proof_kind,json=proofKind,proto3" json:"proof_kind,omitempty"`
+	ProofId                   []byte                 `protobuf:"bytes,2,opt,name=proof_id,json=proofId,proto3" json:"proof_id,omitempty"`
+	Digest                    []byte                 `protobuf:"bytes,3,opt,name=digest,proto3" json:"digest,omitempty"`
+	Message                   []byte                 `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
+	ValidatorSetId            uint64                 `protobuf:"varint,5,opt,name=validator_set_id,json=validatorSetId,proto3" json:"validator_set_id,omitempty"`
+	ValidatorSetHash          []byte                 `protobuf:"bytes,6,opt,name=validator_set_hash,json=validatorSetHash,proto3" json:"validator_set_hash,omitempty"`
+	Members                   []*QuorumProofMember   `protobuf:"bytes,7,rep,name=members,proto3" json:"members,omitempty"`
+	SignerBitmap              []byte                 `protobuf:"bytes,8,opt,name=signer_bitmap,json=signerBitmap,proto3" json:"signer_bitmap,omitempty"`
+	AggregateSignature        []byte                 `protobuf:"bytes,9,opt,name=aggregate_signature,json=aggregateSignature,proto3" json:"aggregate_signature,omitempty"`
+	AggregateSignatureEip2537 []byte                 `protobuf:"bytes,10,opt,name=aggregate_signature_eip2537,json=aggregateSignatureEip2537,proto3" json:"aggregate_signature_eip2537,omitempty"`
+	SignedWeight              uint64                 `protobuf:"varint,11,opt,name=signed_weight,json=signedWeight,proto3" json:"signed_weight,omitempty"`
+	TotalWeight               uint64                 `protobuf:"varint,12,opt,name=total_weight,json=totalWeight,proto3" json:"total_weight,omitempty"`
+	CompletedHeight           uint64                 `protobuf:"varint,13,opt,name=completed_height,json=completedHeight,proto3" json:"completed_height,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
+}
+
+func (x *QuorumProof) Reset() {
+	*x = QuorumProof{}
+	mi := &file_account_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QuorumProof) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuorumProof) ProtoMessage() {}
+
+func (x *QuorumProof) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuorumProof.ProtoReflect.Descriptor instead.
+func (*QuorumProof) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *QuorumProof) GetProofKind() string {
+	if x != nil {
+		return x.ProofKind
+	}
+	return ""
+}
+
+func (x *QuorumProof) GetProofId() []byte {
+	if x != nil {
+		return x.ProofId
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetDigest() []byte {
+	if x != nil {
+		return x.Digest
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetMessage() []byte {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetValidatorSetId() uint64 {
+	if x != nil {
+		return x.ValidatorSetId
+	}
+	return 0
+}
+
+func (x *QuorumProof) GetValidatorSetHash() []byte {
+	if x != nil {
+		return x.ValidatorSetHash
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetMembers() []*QuorumProofMember {
+	if x != nil {
+		return x.Members
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetSignerBitmap() []byte {
+	if x != nil {
+		return x.SignerBitmap
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetAggregateSignature() []byte {
+	if x != nil {
+		return x.AggregateSignature
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetAggregateSignatureEip2537() []byte {
+	if x != nil {
+		return x.AggregateSignatureEip2537
+	}
+	return nil
+}
+
+func (x *QuorumProof) GetSignedWeight() uint64 {
+	if x != nil {
+		return x.SignedWeight
+	}
+	return 0
+}
+
+func (x *QuorumProof) GetTotalWeight() uint64 {
+	if x != nil {
+		return x.TotalWeight
+	}
+	return 0
+}
+
+func (x *QuorumProof) GetCompletedHeight() uint64 {
+	if x != nil {
+		return x.CompletedHeight
+	}
+	return 0
+}
+
+type QuorumSignatureShare struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ProofId         []byte                 `protobuf:"bytes,1,opt,name=proof_id,json=proofId,proto3" json:"proof_id,omitempty"`
+	ObserverAddress []byte                 `protobuf:"bytes,2,opt,name=observer_address,json=observerAddress,proto3" json:"observer_address,omitempty"`
+	Signature       []byte                 `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
+	ObservedHeight  uint64                 `protobuf:"varint,4,opt,name=observed_height,json=observedHeight,proto3" json:"observed_height,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *QuorumSignatureShare) Reset() {
+	*x = QuorumSignatureShare{}
+	mi := &file_account_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QuorumSignatureShare) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QuorumSignatureShare) ProtoMessage() {}
+
+func (x *QuorumSignatureShare) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QuorumSignatureShare.ProtoReflect.Descriptor instead.
+func (*QuorumSignatureShare) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *QuorumSignatureShare) GetProofId() []byte {
+	if x != nil {
+		return x.ProofId
+	}
+	return nil
+}
+
+func (x *QuorumSignatureShare) GetObserverAddress() []byte {
+	if x != nil {
+		return x.ObserverAddress
+	}
+	return nil
+}
+
+func (x *QuorumSignatureShare) GetSignature() []byte {
+	if x != nil {
+		return x.Signature
+	}
+	return nil
+}
+
+func (x *QuorumSignatureShare) GetObservedHeight() uint64 {
+	if x != nil {
+		return x.ObservedHeight
+	}
+	return 0
+}
+
 var File_account_proto protoreflect.FileDescriptor
 
 const file_account_proto_rawDesc = "" +
@@ -1173,7 +1453,34 @@ const file_account_proto_rawDesc = "" +
 	"\x0fobserved_height\x18\x03 \x01(\x04R\x0eobservedHeight\"U\n" +
 	"\vBlockAnchor\x12\x16\n" +
 	"\x06height\x18\x01 \x01(\x04R\x06height\x12.\n" +
-	"\x13previous_block_hash\x18\x02 \x01(\fR\x11previousBlockHashB.Z,github.com/canopy-network/go-plugin/contractb\x06proto3"
+	"\x13previous_block_hash\x18\x02 \x01(\fR\x11previousBlockHash\"\xa3\x01\n" +
+	"\x11QuorumProofMember\x12\x18\n" +
+	"\aaddress\x18\x01 \x01(\fR\aaddress\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x02 \x01(\fR\tpublicKey\x12=\n" +
+	"\x1bweighted_public_key_eip2537\x18\x03 \x01(\fR\x18weightedPublicKeyEip2537\x12\x16\n" +
+	"\x06weight\x18\x04 \x01(\x04R\x06weight\"\x8e\x04\n" +
+	"\vQuorumProof\x12\x1d\n" +
+	"\n" +
+	"proof_kind\x18\x01 \x01(\tR\tproofKind\x12\x19\n" +
+	"\bproof_id\x18\x02 \x01(\fR\aproofId\x12\x16\n" +
+	"\x06digest\x18\x03 \x01(\fR\x06digest\x12\x18\n" +
+	"\amessage\x18\x04 \x01(\fR\amessage\x12(\n" +
+	"\x10validator_set_id\x18\x05 \x01(\x04R\x0evalidatorSetId\x12,\n" +
+	"\x12validator_set_hash\x18\x06 \x01(\fR\x10validatorSetHash\x122\n" +
+	"\amembers\x18\a \x03(\v2\x18.types.QuorumProofMemberR\amembers\x12#\n" +
+	"\rsigner_bitmap\x18\b \x01(\fR\fsignerBitmap\x12/\n" +
+	"\x13aggregate_signature\x18\t \x01(\fR\x12aggregateSignature\x12>\n" +
+	"\x1baggregate_signature_eip2537\x18\n" +
+	" \x01(\fR\x19aggregateSignatureEip2537\x12#\n" +
+	"\rsigned_weight\x18\v \x01(\x04R\fsignedWeight\x12!\n" +
+	"\ftotal_weight\x18\f \x01(\x04R\vtotalWeight\x12)\n" +
+	"\x10completed_height\x18\r \x01(\x04R\x0fcompletedHeight\"\xa3\x01\n" +
+	"\x14QuorumSignatureShare\x12\x19\n" +
+	"\bproof_id\x18\x01 \x01(\fR\aproofId\x12)\n" +
+	"\x10observer_address\x18\x02 \x01(\fR\x0fobserverAddress\x12\x1c\n" +
+	"\tsignature\x18\x03 \x01(\fR\tsignature\x12'\n" +
+	"\x0fobserved_height\x18\x04 \x01(\x04R\x0eobservedHeightB.Z,github.com/canopy-network/go-plugin/contractb\x06proto3"
 
 var (
 	file_account_proto_rawDescOnce sync.Once
@@ -1187,28 +1494,32 @@ func file_account_proto_rawDescGZIP() []byte {
 	return file_account_proto_rawDescData
 }
 
-var file_account_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_account_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_account_proto_goTypes = []any{
-	(*Account)(nil),          // 0: types.Account
-	(*Pool)(nil),             // 1: types.Pool
-	(*Validator)(nil),        // 2: types.Validator
-	(*EnclaveKey)(nil),       // 3: types.EnclaveKey
-	(*Servicer)(nil),         // 4: types.Servicer
-	(*Assignment)(nil),       // 5: types.Assignment
-	(*RequestRecord)(nil),    // 6: types.RequestRecord
-	(*ExecutionRecord)(nil),  // 7: types.ExecutionRecord
-	(*SettlementRecord)(nil), // 8: types.SettlementRecord
-	(*Observation)(nil),      // 9: types.Observation
-	(*BlockAnchor)(nil),      // 10: types.BlockAnchor
+	(*Account)(nil),              // 0: types.Account
+	(*Pool)(nil),                 // 1: types.Pool
+	(*Validator)(nil),            // 2: types.Validator
+	(*EnclaveKey)(nil),           // 3: types.EnclaveKey
+	(*Servicer)(nil),             // 4: types.Servicer
+	(*Assignment)(nil),           // 5: types.Assignment
+	(*RequestRecord)(nil),        // 6: types.RequestRecord
+	(*ExecutionRecord)(nil),      // 7: types.ExecutionRecord
+	(*SettlementRecord)(nil),     // 8: types.SettlementRecord
+	(*Observation)(nil),          // 9: types.Observation
+	(*BlockAnchor)(nil),          // 10: types.BlockAnchor
+	(*QuorumProofMember)(nil),    // 11: types.QuorumProofMember
+	(*QuorumProof)(nil),          // 12: types.QuorumProof
+	(*QuorumSignatureShare)(nil), // 13: types.QuorumSignatureShare
 }
 var file_account_proto_depIdxs = []int32{
-	5, // 0: types.RequestRecord.assignments:type_name -> types.Assignment
-	7, // 1: types.SettlementRecord.executions:type_name -> types.ExecutionRecord
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	5,  // 0: types.RequestRecord.assignments:type_name -> types.Assignment
+	7,  // 1: types.SettlementRecord.executions:type_name -> types.ExecutionRecord
+	11, // 2: types.QuorumProof.members:type_name -> types.QuorumProofMember
+	3,  // [3:3] is the sub-list for method output_type
+	3,  // [3:3] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_account_proto_init() }
@@ -1222,7 +1533,7 @@ func file_account_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_account_proto_rawDesc), len(file_account_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

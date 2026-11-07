@@ -2,6 +2,14 @@
 
 This branch customizes the Go plugin as Takusen's Canopy-native state machine. It adds validator-quorum enclave registration, bonded servicers, Base authorization observations, deterministic model assignments, signed execution receipts, settlement records, and Base finalization observations.
 
+## Base BDN proof export
+
+`takusenSubmitQuorumSignature` carries an active validator's second BDN signature over the exact 32-byte, domain-separated Base contract digest. The transaction itself is independently authenticated by Canopy. Once active signer stake is strictly greater than two thirds, the plugin stores a `QuorumProof` under `/v1/takusen/quorum-proofs/{proof-id}`.
+
+The roster is sorted by compressed G1 public key. Bitmap bit `i` (least-significant bit first) selects roster member `i`. Each proof exports compressed Canopy keys/signature and EIP-2537 encodings: G1 is `x || y` and G2 is `x.c0 || x.c1 || y.c0 || y.c1`, with every 48-byte field element left-padded to 64 bytes. `weighted_public_key_eip2537` already includes the BDN roster coefficient; Base therefore aggregates selected keys with G1 addition before the pairing check. `validator_set_hash` commits to the ordered addresses, compressed public keys, and weights.
+
+The Base proof argument is `abi.encode(bytes aggregateSignatureEIP2537, bytes signerBitmap)`. `plugin/go/contract/quorum_vector_test.go` and Takusen's `contracts/test/BDNQuorumVerifier.t.sol` share a fixed cross-language vector.
+
 The core/plugin begin-block request includes the previous finalized block hash. Takusen uses that trusted value with the request input hash and model identifier to derive assignments.
 
 Run the two-validator development network from the Canopy repository root:

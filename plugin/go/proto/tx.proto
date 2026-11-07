@@ -102,6 +102,20 @@ message MessageFinalizeRequest {
   bytes base_settlement_tx_hash = 3;
 }
 
+// MessageSubmitQuorumSignature lets an active validator attest to the exact
+// digest Base will verify. The outer Canopy transaction authenticates the
+// observer; signature is a second BDN/BLS signature over message (normally the
+// 32-byte Base digest) so shares can be aggregated and exported to Base.
+message MessageSubmitQuorumSignature {
+  bytes observer_address = 1;
+  string proof_kind = 2;
+  bytes proof_id = 3;
+  bytes digest = 4;
+  bytes message = 5;
+  uint64 validator_set_id = 6;
+  bytes signature = 7;
+}
+
 // FeeParams is the parameter space that defines various amounts for transaction fees
 message FeeParams {
   uint64 send_fee = 1; // @gotags: json:"sendFee"

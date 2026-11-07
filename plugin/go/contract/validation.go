@@ -114,3 +114,19 @@ func checkFinalizeRequest(message *MessageFinalizeRequest) ([]byte, *PluginError
 	}
 	return message.ObserverAddress, nil
 }
+
+func checkSubmitQuorumSignature(message *MessageSubmitQuorumSignature) ([]byte, *PluginError) {
+	if !validAddress(message.ObserverAddress) || message.ProofKind == "" || len(message.ProofKind) > 64 ||
+		!validHash(message.ProofId) || !validHash(message.Digest) || !validHash(message.Message) ||
+		message.ValidatorSetId == 0 || len(message.Signature) != 96 {
+		return nil, ErrInvalidTransaction("invalid quorum signature share")
+	}
+	if !strings.EqualFold(hex.EncodeToString(message.Message), hex.EncodeToString(message.Digest)) {
+		return nil, ErrInvalidTransaction("quorum message digest mismatch")
+	}
+	expectedID := quorumProofID(message.ProofKind, message.ValidatorSetId, message.Digest)
+	if !strings.EqualFold(hex.EncodeToString(expectedID), hex.EncodeToString(message.ProofId)) {
+		return nil, ErrInvalidTransaction("quorum proof identifier mismatch")
+	}
+	return message.ObserverAddress, nil
+}

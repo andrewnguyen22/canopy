@@ -127,3 +127,37 @@ message BlockAnchor {
   uint64 height = 1;
   bytes previous_block_hash = 2;
 }
+
+// QuorumProof is the finalized, Base-consumable BDN proof for one exact
+// domain-separated digest. Public keys and signatures retain Canopy's compact
+// encoding while the EIP-2537 fields use the uncompressed 64-byte-coordinate
+// encoding expected by the Base precompiles.
+message QuorumProofMember {
+  bytes address = 1;
+  bytes public_key = 2;
+  bytes weighted_public_key_eip2537 = 3;
+  uint64 weight = 4;
+}
+
+message QuorumProof {
+  string proof_kind = 1;
+  bytes proof_id = 2;
+  bytes digest = 3;
+  bytes message = 4;
+  uint64 validator_set_id = 5;
+  bytes validator_set_hash = 6;
+  repeated QuorumProofMember members = 7;
+  bytes signer_bitmap = 8;
+  bytes aggregate_signature = 9;
+  bytes aggregate_signature_eip2537 = 10;
+  uint64 signed_weight = 11;
+  uint64 total_weight = 12;
+  uint64 completed_height = 13;
+}
+
+message QuorumSignatureShare {
+  bytes proof_id = 1;
+  bytes observer_address = 2;
+  bytes signature = 3;
+  uint64 observed_height = 4;
+}

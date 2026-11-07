@@ -1,6 +1,7 @@
 package contract
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -26,9 +27,22 @@ func (p *Plugin) StartRPCServer() {
 	mux.HandleFunc("GET /v1/takusen/servicers", p.listHandler(ServicerPrefix(), func() proto.Message { return new(Servicer) }))
 	mux.HandleFunc("GET /v1/takusen/requests", p.listHandler(RequestPrefix(), func() proto.Message { return new(RequestRecord) }))
 	mux.HandleFunc("GET /v1/takusen/settlements", p.listHandler(SettlementPrefix(), func() proto.Message { return new(SettlementRecord) }))
+	mux.HandleFunc("GET /v1/takusen/quorum-proofs/{id}", p.quorumProofHandler())
+	mux.HandleFunc("GET /v1/takusen/quorum-proofs", p.listHandler(QuorumProofPrefix(), func() proto.Message { return new(QuorumProof) }))
 	log.Printf("Takusen plugin RPC server (%s) listening on %s", PluginBuild, addr)
 	if err := http.ListenAndServe(addr, mux); err != nil {
 		log.Printf("Takusen plugin RPC server error: %v", err)
+	}
+}
+
+func (p *Plugin) quorumProofHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		proofID, err := hex.DecodeString(strings.TrimPrefix(r.PathValue("id"), "0x"))
+		if err != nil || len(proofID) != 32 {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": "proof id must be 32-byte hexadecimal"})
+			return
+		}
+		p.recordHandler(func(string) []byte { return KeyForQuorumProof(proofID) }, func() proto.Message { return new(QuorumProof) })(w, r)
 	}
 }
 

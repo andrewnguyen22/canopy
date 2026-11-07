@@ -74,3 +74,27 @@ func ErrInvalidAmount() *PluginError {
 func ErrTxFeeBelowStateLimit() *PluginError {
 	return NewError(14, DefaultModule, "tx.fee is below state limit")
 }
+
+func ErrInvalidTransaction(message string) *PluginError {
+	return NewError(15, "takusen", message)
+}
+
+func ErrUnauthorized(message string) *PluginError {
+	return NewError(16, "takusen", message)
+}
+
+func ErrConflict(message string) *PluginError {
+	return NewError(17, "takusen", message)
+}
+
+func ErrNotFound(message string) *PluginError {
+	return NewError(18, "takusen", message)
+}
+
+func ErrState(message string) *PluginError {
+	return NewError(19, "takusen", message)
+}
+
+func ErrCrypto(message string) *PluginError {
+	return NewError(20, "takusen", message)
+}

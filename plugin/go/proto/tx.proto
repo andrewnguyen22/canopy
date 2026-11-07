@@ -32,18 +32,78 @@ message Transaction {
 
 // MessageSend is a standard transfer transaction, taking tokens from the sender and transferring
 // them to the recipient
-message MessageSend {
-  // from_address: is the sender of the funds
-  bytes from_address = 1; // @gotags: json:"fromAddress"
-  // to_address: is the recipient of the funds
-  bytes to_address = 2; // @gotags: json:"toAddress"
-  // amount: is the amount of tokens in micro-denomination (uCNPY)
-  uint64 amount = 3;
+message MessageObserveEnclave {
+  bytes observer_address = 1;
+  bytes owner_address = 2;
+  string tee_key_id = 3;
+  bytes public_key = 4;
+  bytes attestation_hash = 5;
+  bytes pcr0 = 6;
+  bytes pcr1 = 7;
+  bytes pcr2 = 8;
+  bytes nonce = 9;
+  bytes user_data = 10;
+  bytes proof_signature = 11;
+}
+
+message MessageRevokeEnclave {
+  bytes observer_address = 1;
+  string tee_key_id = 2;
+}
+
+message MessageRegisterServicer {
+  bytes owner_address = 1;
+  bytes payout_address = 2;
+  string tee_key_id = 3;
+  repeated string models = 4;
+  uint64 bond = 5;
+}
+
+message MessageUpdateServicer {
+  bytes owner_address = 1;
+  bytes payout_address = 2;
+  string tee_key_id = 3;
+  repeated string models = 4;
+  uint64 additional_bond = 5;
+  bool active = 6;
+}
+
+message MessageObserveAuthorization {
+  bytes observer_address = 1;
+  string request_id = 2;
+  bytes input_hash = 3;
+  bytes requester = 4;
+  uint64 reserved_budget = 5;
+  string output_type = 6;
+  repeated string models = 7;
+  uint32 execution_quorum = 8;
+  bytes base_tx_hash = 9;
+  uint64 deadline_height = 10;
+}
+
+message MessageSubmitExecution {
+  bytes servicer_address = 1;
+  bytes receipt_json = 2;
+  bytes public_key = 3;
+  bytes signature = 4;
+  string archive_id = 5;
+}
+
+message MessageReassignRequest {
+  bytes observer_address = 1;
+  string request_id = 2;
+  string model = 3;
+  uint64 new_deadline_height = 4;
+}
+
+message MessageFinalizeRequest {
+  bytes observer_address = 1;
+  string request_id = 2;
+  bytes base_settlement_tx_hash = 3;
 }
 
 // FeeParams is the parameter space that defines various amounts for transaction fees
 message FeeParams {
-  // send_fee: is the fee amount (in uCNPY) for Message Send
   uint64 send_fee = 1; // @gotags: json:"sendFee"
   // NO CONFLICT STARTING AT FIELD = 14
 }

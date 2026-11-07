@@ -4,9 +4,11 @@
 # Stage 1: Build Canopy
 FROM golang:1.26-alpine AS canopy-builder
 WORKDIR /app
+RUN apk add --no-cache make nodejs npm
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
+RUN make build/wallet build/explorer
 RUN go build -trimpath -ldflags="-s -w" -o /canopy ./cmd/main/...
 
 # Stage 2: Build Go Plugin
@@ -27,6 +29,8 @@ RUN chmod +x plugin/go/pluginctl.sh plugin/go/go-plugin
 
 # Set plugin type for Canopy to start
 RUN printf '{"plugin":"go"}\n' > /root/.canopy/config.json
+
+EXPOSE 50002 50003 50010 9001
 
 # Default: run canopy (start plugin separately with: ./plugin)
 # Mount config at runtime: -v ~/.canopy:/root/.canopy

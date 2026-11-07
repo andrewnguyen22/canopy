@@ -24,3 +24,106 @@ message Pool {
   // amount: the balance of funds the pool has
   uint64 amount = 2;
 }
+
+// Validator mirrors the core Canopy validator wire format. Takusen reads these
+// records from the shared state tree to calculate stake-weighted observation
+// quorums; it never writes them.
+message Validator {
+  bytes address = 1;
+  bytes public_key = 2;
+  string net_address = 3;
+  uint64 staked_amount = 4;
+  repeated uint64 committees = 5;
+  uint64 max_paused_height = 6;
+  uint64 unstaking_height = 7;
+  bytes output = 8;
+  bool delegate = 9;
+  bool compound = 10;
+}
+
+message EnclaveKey {
+  bytes owner_address = 1;
+  string tee_key_id = 2;
+  bytes public_key = 3;
+  bytes attestation_hash = 4;
+  bytes pcr0 = 5;
+  bytes pcr1 = 6;
+  bytes pcr2 = 7;
+  uint64 registered_height = 8;
+  bool active = 9;
+}
+
+message Servicer {
+  bytes owner_address = 1;
+  bytes payout_address = 2;
+  string tee_key_id = 3;
+  repeated string models = 4;
+  uint64 bond = 5;
+  bool active = 6;
+  uint64 registered_height = 7;
+  uint64 failure_count = 8;
+}
+
+message Assignment {
+  string model = 1;
+  bytes servicer_address = 2;
+  uint32 attempt = 3;
+  bool completed = 4;
+  string execution_id = 5;
+}
+
+message RequestRecord {
+  string request_id = 1;
+  bytes input_hash = 2;
+  bytes requester = 3;
+  uint64 reserved_budget = 4;
+  string output_type = 5;
+  repeated string models = 6;
+  uint32 execution_quorum = 7;
+  bytes base_tx_hash = 8;
+  uint64 deadline_height = 9;
+  uint64 authorized_height = 10;
+  bytes assignment_seed = 11;
+  repeated Assignment assignments = 12;
+  string status = 13;
+  uint64 spent = 14;
+  bytes consensus_output_hash = 15;
+  uint32 agreement_count = 16;
+  bytes base_settlement_tx_hash = 17;
+}
+
+message ExecutionRecord {
+  string execution_id = 1;
+  string request_id = 2;
+  string model = 3;
+  bytes servicer_address = 4;
+  string status = 5;
+  string output = 6;
+  bytes output_hash = 7;
+  uint64 cost = 8;
+  string tee_key_id = 9;
+  bytes receipt_digest = 10;
+  string archive_id = 11;
+  uint64 committed_height = 12;
+}
+
+message SettlementRecord {
+  string request_id = 1;
+  repeated ExecutionRecord executions = 2;
+  uint64 total_cost = 3;
+  bytes settlement_digest = 4;
+  uint64 completed_height = 5;
+  string status = 6;
+  bytes base_tx_hash = 7;
+}
+
+message Observation {
+  bytes subject_hash = 1;
+  bytes observer_address = 2;
+  uint64 observed_height = 3;
+}
+
+message BlockAnchor {
+  uint64 height = 1;
+  bytes previous_block_hash = 2;
+}

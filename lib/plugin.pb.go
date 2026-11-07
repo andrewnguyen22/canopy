@@ -729,12 +729,15 @@ func (x *PluginGenesisResponse) GetError() *PluginError {
 	return nil
 }
 
-// PluginBeginRequest signals start of a new block
+// PluginBeginRequest signals start of a new block. The finalized predecessor
+// hash lets deterministic applications derive assignments without trusting a
+// transaction-supplied chain anchor.
 type PluginBeginRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Height        uint64                 `protobuf:"varint,1,opt,name=height,proto3" json:"height,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Height            uint64                 `protobuf:"varint,1,opt,name=height,proto3" json:"height,omitempty"`
+	PreviousBlockHash []byte                 `protobuf:"bytes,2,opt,name=previous_block_hash,json=previousBlockHash,proto3" json:"previous_block_hash,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *PluginBeginRequest) Reset() {
@@ -772,6 +775,13 @@ func (x *PluginBeginRequest) GetHeight() uint64 {
 		return x.Height
 	}
 	return 0
+}
+
+func (x *PluginBeginRequest) GetPreviousBlockHash() []byte {
+	if x != nil {
+		return x.PreviousBlockHash
+	}
+	return nil
 }
 
 // PluginBeginResponse acknowledges begin block execution
@@ -1926,9 +1936,10 @@ const file_plugin_proto_rawDesc = "" +
 	"\x14PluginGenesisRequest\x12!\n" +
 	"\fgenesis_json\x18\x01 \x01(\fR\vgenesisJson\"A\n" +
 	"\x15PluginGenesisResponse\x12(\n" +
-	"\x05error\x18c \x01(\v2\x12.types.PluginErrorR\x05error\",\n" +
+	"\x05error\x18c \x01(\v2\x12.types.PluginErrorR\x05error\"\\\n" +
 	"\x12PluginBeginRequest\x12\x16\n" +
-	"\x06height\x18\x01 \x01(\x04R\x06height\"e\n" +
+	"\x06height\x18\x01 \x01(\x04R\x06height\x12.\n" +
+	"\x13previous_block_hash\x18\x02 \x01(\fR\x11previousBlockHash\"e\n" +
 	"\x13PluginBeginResponse\x12$\n" +
 	"\x06events\x18\x01 \x03(\v2\f.types.EventR\x06events\x12(\n" +
 	"\x05error\x18c \x01(\v2\x12.types.PluginErrorR\x05error\"P\n" +

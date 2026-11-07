@@ -15,7 +15,18 @@ func (s *StateMachine) BeginBlock() (lib.Events, lib.ErrorI) {
 	s.events.Refer(lib.EventStageBeginBlock)
 	// execute plugin begin block if enabled
 	if s.Plugin != nil {
-		resp, err := s.Plugin.BeginBlock(s, &lib.PluginBeginRequest{Height: s.height})
+		previousBlockHash := nonEmptyHash(nil)
+		if s.Height() > 1 {
+			previousBlock, err := s.LoadBlock(s.Height() - 1)
+			if err != nil {
+				return nil, err
+			}
+			previousBlockHash = nonEmptyHash(previousBlock.BlockHeader.Hash)
+		}
+		resp, err := s.Plugin.BeginBlock(s, &lib.PluginBeginRequest{
+			Height:            s.height,
+			PreviousBlockHash: previousBlockHash,
+		})
 		if err != nil {
 			return nil, err
 		}

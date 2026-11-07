@@ -94,7 +94,12 @@ message PluginGenesisRequest {bytes genesis_json = 1;}
 message PluginGenesisResponse {PluginError error = 99;}
 
 // PluginBeginRequest signals start of a new block
-message PluginBeginRequest {uint64 height = 1; }
+message PluginBeginRequest {
+  uint64 height = 1;
+  // previous_block_hash is the finalized predecessor used by deterministic
+  // application assignment. It is supplied by core, never by a transaction.
+  bytes previous_block_hash = 2;
+}
 
 // PluginBeginResponse acknowledges begin block execution
 message PluginBeginResponse {

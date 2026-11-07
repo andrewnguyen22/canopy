@@ -35,7 +35,7 @@ const socketPath = "plugin.sock"
 
 // PluginBuild is a human-readable build marker logged at startup so operators can confirm, via
 // `tail -f /tmp/plugin/go-plugin.log`, that the running binary includes the expected features.
-const PluginBuild = "go-plugin v1 (base SDK + detached custom RPC query path)"
+const PluginBuild = "takusen native module"
 
 // StartPlugin() creates and starts a plugin, returning the running *Plugin so builders can
 // access detached capabilities (e.g. QueryState) to back their own custom RPC endpoints

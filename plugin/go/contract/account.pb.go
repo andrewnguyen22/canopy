@@ -144,6 +144,917 @@ func (x *Pool) GetAmount() uint64 {
 	return 0
 }
 
+// Validator mirrors the core Canopy validator wire format. Takusen reads these
+// records from the shared state tree to calculate stake-weighted observation
+// quorums; it never writes them.
+type Validator struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Address         []byte                 `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	PublicKey       []byte                 `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	NetAddress      string                 `protobuf:"bytes,3,opt,name=net_address,json=netAddress,proto3" json:"net_address,omitempty"`
+	StakedAmount    uint64                 `protobuf:"varint,4,opt,name=staked_amount,json=stakedAmount,proto3" json:"staked_amount,omitempty"`
+	Committees      []uint64               `protobuf:"varint,5,rep,packed,name=committees,proto3" json:"committees,omitempty"`
+	MaxPausedHeight uint64                 `protobuf:"varint,6,opt,name=max_paused_height,json=maxPausedHeight,proto3" json:"max_paused_height,omitempty"`
+	UnstakingHeight uint64                 `protobuf:"varint,7,opt,name=unstaking_height,json=unstakingHeight,proto3" json:"unstaking_height,omitempty"`
+	Output          []byte                 `protobuf:"bytes,8,opt,name=output,proto3" json:"output,omitempty"`
+	Delegate        bool                   `protobuf:"varint,9,opt,name=delegate,proto3" json:"delegate,omitempty"`
+	Compound        bool                   `protobuf:"varint,10,opt,name=compound,proto3" json:"compound,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Validator) Reset() {
+	*x = Validator{}
+	mi := &file_account_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Validator) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Validator) ProtoMessage() {}
+
+func (x *Validator) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Validator.ProtoReflect.Descriptor instead.
+func (*Validator) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Validator) GetAddress() []byte {
+	if x != nil {
+		return x.Address
+	}
+	return nil
+}
+
+func (x *Validator) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *Validator) GetNetAddress() string {
+	if x != nil {
+		return x.NetAddress
+	}
+	return ""
+}
+
+func (x *Validator) GetStakedAmount() uint64 {
+	if x != nil {
+		return x.StakedAmount
+	}
+	return 0
+}
+
+func (x *Validator) GetCommittees() []uint64 {
+	if x != nil {
+		return x.Committees
+	}
+	return nil
+}
+
+func (x *Validator) GetMaxPausedHeight() uint64 {
+	if x != nil {
+		return x.MaxPausedHeight
+	}
+	return 0
+}
+
+func (x *Validator) GetUnstakingHeight() uint64 {
+	if x != nil {
+		return x.UnstakingHeight
+	}
+	return 0
+}
+
+func (x *Validator) GetOutput() []byte {
+	if x != nil {
+		return x.Output
+	}
+	return nil
+}
+
+func (x *Validator) GetDelegate() bool {
+	if x != nil {
+		return x.Delegate
+	}
+	return false
+}
+
+func (x *Validator) GetCompound() bool {
+	if x != nil {
+		return x.Compound
+	}
+	return false
+}
+
+type EnclaveKey struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OwnerAddress     []byte                 `protobuf:"bytes,1,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	TeeKeyId         string                 `protobuf:"bytes,2,opt,name=tee_key_id,json=teeKeyId,proto3" json:"tee_key_id,omitempty"`
+	PublicKey        []byte                 `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	AttestationHash  []byte                 `protobuf:"bytes,4,opt,name=attestation_hash,json=attestationHash,proto3" json:"attestation_hash,omitempty"`
+	Pcr0             []byte                 `protobuf:"bytes,5,opt,name=pcr0,proto3" json:"pcr0,omitempty"`
+	Pcr1             []byte                 `protobuf:"bytes,6,opt,name=pcr1,proto3" json:"pcr1,omitempty"`
+	Pcr2             []byte                 `protobuf:"bytes,7,opt,name=pcr2,proto3" json:"pcr2,omitempty"`
+	RegisteredHeight uint64                 `protobuf:"varint,8,opt,name=registered_height,json=registeredHeight,proto3" json:"registered_height,omitempty"`
+	Active           bool                   `protobuf:"varint,9,opt,name=active,proto3" json:"active,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *EnclaveKey) Reset() {
+	*x = EnclaveKey{}
+	mi := &file_account_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EnclaveKey) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnclaveKey) ProtoMessage() {}
+
+func (x *EnclaveKey) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnclaveKey.ProtoReflect.Descriptor instead.
+func (*EnclaveKey) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *EnclaveKey) GetOwnerAddress() []byte {
+	if x != nil {
+		return x.OwnerAddress
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetTeeKeyId() string {
+	if x != nil {
+		return x.TeeKeyId
+	}
+	return ""
+}
+
+func (x *EnclaveKey) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetAttestationHash() []byte {
+	if x != nil {
+		return x.AttestationHash
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetPcr0() []byte {
+	if x != nil {
+		return x.Pcr0
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetPcr1() []byte {
+	if x != nil {
+		return x.Pcr1
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetPcr2() []byte {
+	if x != nil {
+		return x.Pcr2
+	}
+	return nil
+}
+
+func (x *EnclaveKey) GetRegisteredHeight() uint64 {
+	if x != nil {
+		return x.RegisteredHeight
+	}
+	return 0
+}
+
+func (x *EnclaveKey) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+type Servicer struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	OwnerAddress     []byte                 `protobuf:"bytes,1,opt,name=owner_address,json=ownerAddress,proto3" json:"owner_address,omitempty"`
+	PayoutAddress    []byte                 `protobuf:"bytes,2,opt,name=payout_address,json=payoutAddress,proto3" json:"payout_address,omitempty"`
+	TeeKeyId         string                 `protobuf:"bytes,3,opt,name=tee_key_id,json=teeKeyId,proto3" json:"tee_key_id,omitempty"`
+	Models           []string               `protobuf:"bytes,4,rep,name=models,proto3" json:"models,omitempty"`
+	Bond             uint64                 `protobuf:"varint,5,opt,name=bond,proto3" json:"bond,omitempty"`
+	Active           bool                   `protobuf:"varint,6,opt,name=active,proto3" json:"active,omitempty"`
+	RegisteredHeight uint64                 `protobuf:"varint,7,opt,name=registered_height,json=registeredHeight,proto3" json:"registered_height,omitempty"`
+	FailureCount     uint64                 `protobuf:"varint,8,opt,name=failure_count,json=failureCount,proto3" json:"failure_count,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *Servicer) Reset() {
+	*x = Servicer{}
+	mi := &file_account_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Servicer) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Servicer) ProtoMessage() {}
+
+func (x *Servicer) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Servicer.ProtoReflect.Descriptor instead.
+func (*Servicer) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Servicer) GetOwnerAddress() []byte {
+	if x != nil {
+		return x.OwnerAddress
+	}
+	return nil
+}
+
+func (x *Servicer) GetPayoutAddress() []byte {
+	if x != nil {
+		return x.PayoutAddress
+	}
+	return nil
+}
+
+func (x *Servicer) GetTeeKeyId() string {
+	if x != nil {
+		return x.TeeKeyId
+	}
+	return ""
+}
+
+func (x *Servicer) GetModels() []string {
+	if x != nil {
+		return x.Models
+	}
+	return nil
+}
+
+func (x *Servicer) GetBond() uint64 {
+	if x != nil {
+		return x.Bond
+	}
+	return 0
+}
+
+func (x *Servicer) GetActive() bool {
+	if x != nil {
+		return x.Active
+	}
+	return false
+}
+
+func (x *Servicer) GetRegisteredHeight() uint64 {
+	if x != nil {
+		return x.RegisteredHeight
+	}
+	return 0
+}
+
+func (x *Servicer) GetFailureCount() uint64 {
+	if x != nil {
+		return x.FailureCount
+	}
+	return 0
+}
+
+type Assignment struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Model           string                 `protobuf:"bytes,1,opt,name=model,proto3" json:"model,omitempty"`
+	ServicerAddress []byte                 `protobuf:"bytes,2,opt,name=servicer_address,json=servicerAddress,proto3" json:"servicer_address,omitempty"`
+	Attempt         uint32                 `protobuf:"varint,3,opt,name=attempt,proto3" json:"attempt,omitempty"`
+	Completed       bool                   `protobuf:"varint,4,opt,name=completed,proto3" json:"completed,omitempty"`
+	ExecutionId     string                 `protobuf:"bytes,5,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Assignment) Reset() {
+	*x = Assignment{}
+	mi := &file_account_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Assignment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Assignment) ProtoMessage() {}
+
+func (x *Assignment) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Assignment.ProtoReflect.Descriptor instead.
+func (*Assignment) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Assignment) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *Assignment) GetServicerAddress() []byte {
+	if x != nil {
+		return x.ServicerAddress
+	}
+	return nil
+}
+
+func (x *Assignment) GetAttempt() uint32 {
+	if x != nil {
+		return x.Attempt
+	}
+	return 0
+}
+
+func (x *Assignment) GetCompleted() bool {
+	if x != nil {
+		return x.Completed
+	}
+	return false
+}
+
+func (x *Assignment) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
+type RequestRecord struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	RequestId            string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	InputHash            []byte                 `protobuf:"bytes,2,opt,name=input_hash,json=inputHash,proto3" json:"input_hash,omitempty"`
+	Requester            []byte                 `protobuf:"bytes,3,opt,name=requester,proto3" json:"requester,omitempty"`
+	ReservedBudget       uint64                 `protobuf:"varint,4,opt,name=reserved_budget,json=reservedBudget,proto3" json:"reserved_budget,omitempty"`
+	OutputType           string                 `protobuf:"bytes,5,opt,name=output_type,json=outputType,proto3" json:"output_type,omitempty"`
+	Models               []string               `protobuf:"bytes,6,rep,name=models,proto3" json:"models,omitempty"`
+	ExecutionQuorum      uint32                 `protobuf:"varint,7,opt,name=execution_quorum,json=executionQuorum,proto3" json:"execution_quorum,omitempty"`
+	BaseTxHash           []byte                 `protobuf:"bytes,8,opt,name=base_tx_hash,json=baseTxHash,proto3" json:"base_tx_hash,omitempty"`
+	DeadlineHeight       uint64                 `protobuf:"varint,9,opt,name=deadline_height,json=deadlineHeight,proto3" json:"deadline_height,omitempty"`
+	AuthorizedHeight     uint64                 `protobuf:"varint,10,opt,name=authorized_height,json=authorizedHeight,proto3" json:"authorized_height,omitempty"`
+	AssignmentSeed       []byte                 `protobuf:"bytes,11,opt,name=assignment_seed,json=assignmentSeed,proto3" json:"assignment_seed,omitempty"`
+	Assignments          []*Assignment          `protobuf:"bytes,12,rep,name=assignments,proto3" json:"assignments,omitempty"`
+	Status               string                 `protobuf:"bytes,13,opt,name=status,proto3" json:"status,omitempty"`
+	Spent                uint64                 `protobuf:"varint,14,opt,name=spent,proto3" json:"spent,omitempty"`
+	ConsensusOutputHash  []byte                 `protobuf:"bytes,15,opt,name=consensus_output_hash,json=consensusOutputHash,proto3" json:"consensus_output_hash,omitempty"`
+	AgreementCount       uint32                 `protobuf:"varint,16,opt,name=agreement_count,json=agreementCount,proto3" json:"agreement_count,omitempty"`
+	BaseSettlementTxHash []byte                 `protobuf:"bytes,17,opt,name=base_settlement_tx_hash,json=baseSettlementTxHash,proto3" json:"base_settlement_tx_hash,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *RequestRecord) Reset() {
+	*x = RequestRecord{}
+	mi := &file_account_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RequestRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RequestRecord) ProtoMessage() {}
+
+func (x *RequestRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RequestRecord.ProtoReflect.Descriptor instead.
+func (*RequestRecord) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *RequestRecord) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *RequestRecord) GetInputHash() []byte {
+	if x != nil {
+		return x.InputHash
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetRequester() []byte {
+	if x != nil {
+		return x.Requester
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetReservedBudget() uint64 {
+	if x != nil {
+		return x.ReservedBudget
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetOutputType() string {
+	if x != nil {
+		return x.OutputType
+	}
+	return ""
+}
+
+func (x *RequestRecord) GetModels() []string {
+	if x != nil {
+		return x.Models
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetExecutionQuorum() uint32 {
+	if x != nil {
+		return x.ExecutionQuorum
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetBaseTxHash() []byte {
+	if x != nil {
+		return x.BaseTxHash
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetDeadlineHeight() uint64 {
+	if x != nil {
+		return x.DeadlineHeight
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetAuthorizedHeight() uint64 {
+	if x != nil {
+		return x.AuthorizedHeight
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetAssignmentSeed() []byte {
+	if x != nil {
+		return x.AssignmentSeed
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetAssignments() []*Assignment {
+	if x != nil {
+		return x.Assignments
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *RequestRecord) GetSpent() uint64 {
+	if x != nil {
+		return x.Spent
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetConsensusOutputHash() []byte {
+	if x != nil {
+		return x.ConsensusOutputHash
+	}
+	return nil
+}
+
+func (x *RequestRecord) GetAgreementCount() uint32 {
+	if x != nil {
+		return x.AgreementCount
+	}
+	return 0
+}
+
+func (x *RequestRecord) GetBaseSettlementTxHash() []byte {
+	if x != nil {
+		return x.BaseSettlementTxHash
+	}
+	return nil
+}
+
+type ExecutionRecord struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ExecutionId     string                 `protobuf:"bytes,1,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`
+	RequestId       string                 `protobuf:"bytes,2,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	Model           string                 `protobuf:"bytes,3,opt,name=model,proto3" json:"model,omitempty"`
+	ServicerAddress []byte                 `protobuf:"bytes,4,opt,name=servicer_address,json=servicerAddress,proto3" json:"servicer_address,omitempty"`
+	Status          string                 `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
+	Output          string                 `protobuf:"bytes,6,opt,name=output,proto3" json:"output,omitempty"`
+	OutputHash      []byte                 `protobuf:"bytes,7,opt,name=output_hash,json=outputHash,proto3" json:"output_hash,omitempty"`
+	Cost            uint64                 `protobuf:"varint,8,opt,name=cost,proto3" json:"cost,omitempty"`
+	TeeKeyId        string                 `protobuf:"bytes,9,opt,name=tee_key_id,json=teeKeyId,proto3" json:"tee_key_id,omitempty"`
+	ReceiptDigest   []byte                 `protobuf:"bytes,10,opt,name=receipt_digest,json=receiptDigest,proto3" json:"receipt_digest,omitempty"`
+	ArchiveId       string                 `protobuf:"bytes,11,opt,name=archive_id,json=archiveId,proto3" json:"archive_id,omitempty"`
+	CommittedHeight uint64                 `protobuf:"varint,12,opt,name=committed_height,json=committedHeight,proto3" json:"committed_height,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ExecutionRecord) Reset() {
+	*x = ExecutionRecord{}
+	mi := &file_account_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExecutionRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExecutionRecord) ProtoMessage() {}
+
+func (x *ExecutionRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExecutionRecord.ProtoReflect.Descriptor instead.
+func (*ExecutionRecord) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ExecutionRecord) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetServicerAddress() []byte {
+	if x != nil {
+		return x.ServicerAddress
+	}
+	return nil
+}
+
+func (x *ExecutionRecord) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetOutput() string {
+	if x != nil {
+		return x.Output
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetOutputHash() []byte {
+	if x != nil {
+		return x.OutputHash
+	}
+	return nil
+}
+
+func (x *ExecutionRecord) GetCost() uint64 {
+	if x != nil {
+		return x.Cost
+	}
+	return 0
+}
+
+func (x *ExecutionRecord) GetTeeKeyId() string {
+	if x != nil {
+		return x.TeeKeyId
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetReceiptDigest() []byte {
+	if x != nil {
+		return x.ReceiptDigest
+	}
+	return nil
+}
+
+func (x *ExecutionRecord) GetArchiveId() string {
+	if x != nil {
+		return x.ArchiveId
+	}
+	return ""
+}
+
+func (x *ExecutionRecord) GetCommittedHeight() uint64 {
+	if x != nil {
+		return x.CommittedHeight
+	}
+	return 0
+}
+
+type SettlementRecord struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	RequestId        string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	Executions       []*ExecutionRecord     `protobuf:"bytes,2,rep,name=executions,proto3" json:"executions,omitempty"`
+	TotalCost        uint64                 `protobuf:"varint,3,opt,name=total_cost,json=totalCost,proto3" json:"total_cost,omitempty"`
+	SettlementDigest []byte                 `protobuf:"bytes,4,opt,name=settlement_digest,json=settlementDigest,proto3" json:"settlement_digest,omitempty"`
+	CompletedHeight  uint64                 `protobuf:"varint,5,opt,name=completed_height,json=completedHeight,proto3" json:"completed_height,omitempty"`
+	Status           string                 `protobuf:"bytes,6,opt,name=status,proto3" json:"status,omitempty"`
+	BaseTxHash       []byte                 `protobuf:"bytes,7,opt,name=base_tx_hash,json=baseTxHash,proto3" json:"base_tx_hash,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *SettlementRecord) Reset() {
+	*x = SettlementRecord{}
+	mi := &file_account_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SettlementRecord) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SettlementRecord) ProtoMessage() {}
+
+func (x *SettlementRecord) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SettlementRecord.ProtoReflect.Descriptor instead.
+func (*SettlementRecord) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SettlementRecord) GetRequestId() string {
+	if x != nil {
+		return x.RequestId
+	}
+	return ""
+}
+
+func (x *SettlementRecord) GetExecutions() []*ExecutionRecord {
+	if x != nil {
+		return x.Executions
+	}
+	return nil
+}
+
+func (x *SettlementRecord) GetTotalCost() uint64 {
+	if x != nil {
+		return x.TotalCost
+	}
+	return 0
+}
+
+func (x *SettlementRecord) GetSettlementDigest() []byte {
+	if x != nil {
+		return x.SettlementDigest
+	}
+	return nil
+}
+
+func (x *SettlementRecord) GetCompletedHeight() uint64 {
+	if x != nil {
+		return x.CompletedHeight
+	}
+	return 0
+}
+
+func (x *SettlementRecord) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *SettlementRecord) GetBaseTxHash() []byte {
+	if x != nil {
+		return x.BaseTxHash
+	}
+	return nil
+}
+
+type Observation struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	SubjectHash     []byte                 `protobuf:"bytes,1,opt,name=subject_hash,json=subjectHash,proto3" json:"subject_hash,omitempty"`
+	ObserverAddress []byte                 `protobuf:"bytes,2,opt,name=observer_address,json=observerAddress,proto3" json:"observer_address,omitempty"`
+	ObservedHeight  uint64                 `protobuf:"varint,3,opt,name=observed_height,json=observedHeight,proto3" json:"observed_height,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *Observation) Reset() {
+	*x = Observation{}
+	mi := &file_account_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Observation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Observation) ProtoMessage() {}
+
+func (x *Observation) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Observation.ProtoReflect.Descriptor instead.
+func (*Observation) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Observation) GetSubjectHash() []byte {
+	if x != nil {
+		return x.SubjectHash
+	}
+	return nil
+}
+
+func (x *Observation) GetObserverAddress() []byte {
+	if x != nil {
+		return x.ObserverAddress
+	}
+	return nil
+}
+
+func (x *Observation) GetObservedHeight() uint64 {
+	if x != nil {
+		return x.ObservedHeight
+	}
+	return 0
+}
+
+type BlockAnchor struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Height            uint64                 `protobuf:"varint,1,opt,name=height,proto3" json:"height,omitempty"`
+	PreviousBlockHash []byte                 `protobuf:"bytes,2,opt,name=previous_block_hash,json=previousBlockHash,proto3" json:"previous_block_hash,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *BlockAnchor) Reset() {
+	*x = BlockAnchor{}
+	mi := &file_account_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BlockAnchor) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BlockAnchor) ProtoMessage() {}
+
+func (x *BlockAnchor) ProtoReflect() protoreflect.Message {
+	mi := &file_account_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BlockAnchor.ProtoReflect.Descriptor instead.
+func (*BlockAnchor) Descriptor() ([]byte, []int) {
+	return file_account_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BlockAnchor) GetHeight() uint64 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *BlockAnchor) GetPreviousBlockHash() []byte {
+	if x != nil {
+		return x.PreviousBlockHash
+	}
+	return nil
+}
+
 var File_account_proto protoreflect.FileDescriptor
 
 const file_account_proto_rawDesc = "" +
@@ -155,7 +1066,114 @@ const file_account_proto_rawDesc = "" +
 	"\x05nonce\x18\a \x01(\x04R\x05nonce\".\n" +
 	"\x04Pool\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x16\n" +
-	"\x06amount\x18\x02 \x01(\x04R\x06amountB.Z,github.com/canopy-network/go-plugin/contractb\x06proto3"
+	"\x06amount\x18\x02 \x01(\x04R\x06amount\"\xd1\x02\n" +
+	"\tValidator\x12\x18\n" +
+	"\aaddress\x18\x01 \x01(\fR\aaddress\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x02 \x01(\fR\tpublicKey\x12\x1f\n" +
+	"\vnet_address\x18\x03 \x01(\tR\n" +
+	"netAddress\x12#\n" +
+	"\rstaked_amount\x18\x04 \x01(\x04R\fstakedAmount\x12\x1e\n" +
+	"\n" +
+	"committees\x18\x05 \x03(\x04R\n" +
+	"committees\x12*\n" +
+	"\x11max_paused_height\x18\x06 \x01(\x04R\x0fmaxPausedHeight\x12)\n" +
+	"\x10unstaking_height\x18\a \x01(\x04R\x0funstakingHeight\x12\x16\n" +
+	"\x06output\x18\b \x01(\fR\x06output\x12\x1a\n" +
+	"\bdelegate\x18\t \x01(\bR\bdelegate\x12\x1a\n" +
+	"\bcompound\x18\n" +
+	" \x01(\bR\bcompound\"\x9a\x02\n" +
+	"\n" +
+	"EnclaveKey\x12#\n" +
+	"\rowner_address\x18\x01 \x01(\fR\fownerAddress\x12\x1c\n" +
+	"\n" +
+	"tee_key_id\x18\x02 \x01(\tR\bteeKeyId\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x03 \x01(\fR\tpublicKey\x12)\n" +
+	"\x10attestation_hash\x18\x04 \x01(\fR\x0fattestationHash\x12\x12\n" +
+	"\x04pcr0\x18\x05 \x01(\fR\x04pcr0\x12\x12\n" +
+	"\x04pcr1\x18\x06 \x01(\fR\x04pcr1\x12\x12\n" +
+	"\x04pcr2\x18\a \x01(\fR\x04pcr2\x12+\n" +
+	"\x11registered_height\x18\b \x01(\x04R\x10registeredHeight\x12\x16\n" +
+	"\x06active\x18\t \x01(\bR\x06active\"\x8a\x02\n" +
+	"\bServicer\x12#\n" +
+	"\rowner_address\x18\x01 \x01(\fR\fownerAddress\x12%\n" +
+	"\x0epayout_address\x18\x02 \x01(\fR\rpayoutAddress\x12\x1c\n" +
+	"\n" +
+	"tee_key_id\x18\x03 \x01(\tR\bteeKeyId\x12\x16\n" +
+	"\x06models\x18\x04 \x03(\tR\x06models\x12\x12\n" +
+	"\x04bond\x18\x05 \x01(\x04R\x04bond\x12\x16\n" +
+	"\x06active\x18\x06 \x01(\bR\x06active\x12+\n" +
+	"\x11registered_height\x18\a \x01(\x04R\x10registeredHeight\x12#\n" +
+	"\rfailure_count\x18\b \x01(\x04R\ffailureCount\"\xa8\x01\n" +
+	"\n" +
+	"Assignment\x12\x14\n" +
+	"\x05model\x18\x01 \x01(\tR\x05model\x12)\n" +
+	"\x10servicer_address\x18\x02 \x01(\fR\x0fservicerAddress\x12\x18\n" +
+	"\aattempt\x18\x03 \x01(\rR\aattempt\x12\x1c\n" +
+	"\tcompleted\x18\x04 \x01(\bR\tcompleted\x12!\n" +
+	"\fexecution_id\x18\x05 \x01(\tR\vexecutionId\"\x90\x05\n" +
+	"\rRequestRecord\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x12\x1d\n" +
+	"\n" +
+	"input_hash\x18\x02 \x01(\fR\tinputHash\x12\x1c\n" +
+	"\trequester\x18\x03 \x01(\fR\trequester\x12'\n" +
+	"\x0freserved_budget\x18\x04 \x01(\x04R\x0ereservedBudget\x12\x1f\n" +
+	"\voutput_type\x18\x05 \x01(\tR\n" +
+	"outputType\x12\x16\n" +
+	"\x06models\x18\x06 \x03(\tR\x06models\x12)\n" +
+	"\x10execution_quorum\x18\a \x01(\rR\x0fexecutionQuorum\x12 \n" +
+	"\fbase_tx_hash\x18\b \x01(\fR\n" +
+	"baseTxHash\x12'\n" +
+	"\x0fdeadline_height\x18\t \x01(\x04R\x0edeadlineHeight\x12+\n" +
+	"\x11authorized_height\x18\n" +
+	" \x01(\x04R\x10authorizedHeight\x12'\n" +
+	"\x0fassignment_seed\x18\v \x01(\fR\x0eassignmentSeed\x123\n" +
+	"\vassignments\x18\f \x03(\v2\x11.types.AssignmentR\vassignments\x12\x16\n" +
+	"\x06status\x18\r \x01(\tR\x06status\x12\x14\n" +
+	"\x05spent\x18\x0e \x01(\x04R\x05spent\x122\n" +
+	"\x15consensus_output_hash\x18\x0f \x01(\fR\x13consensusOutputHash\x12'\n" +
+	"\x0fagreement_count\x18\x10 \x01(\rR\x0eagreementCount\x125\n" +
+	"\x17base_settlement_tx_hash\x18\x11 \x01(\fR\x14baseSettlementTxHash\"\x88\x03\n" +
+	"\x0fExecutionRecord\x12!\n" +
+	"\fexecution_id\x18\x01 \x01(\tR\vexecutionId\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x02 \x01(\tR\trequestId\x12\x14\n" +
+	"\x05model\x18\x03 \x01(\tR\x05model\x12)\n" +
+	"\x10servicer_address\x18\x04 \x01(\fR\x0fservicerAddress\x12\x16\n" +
+	"\x06status\x18\x05 \x01(\tR\x06status\x12\x16\n" +
+	"\x06output\x18\x06 \x01(\tR\x06output\x12\x1f\n" +
+	"\voutput_hash\x18\a \x01(\fR\n" +
+	"outputHash\x12\x12\n" +
+	"\x04cost\x18\b \x01(\x04R\x04cost\x12\x1c\n" +
+	"\n" +
+	"tee_key_id\x18\t \x01(\tR\bteeKeyId\x12%\n" +
+	"\x0ereceipt_digest\x18\n" +
+	" \x01(\fR\rreceiptDigest\x12\x1d\n" +
+	"\n" +
+	"archive_id\x18\v \x01(\tR\tarchiveId\x12)\n" +
+	"\x10committed_height\x18\f \x01(\x04R\x0fcommittedHeight\"\x9a\x02\n" +
+	"\x10SettlementRecord\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\tR\trequestId\x126\n" +
+	"\n" +
+	"executions\x18\x02 \x03(\v2\x16.types.ExecutionRecordR\n" +
+	"executions\x12\x1d\n" +
+	"\n" +
+	"total_cost\x18\x03 \x01(\x04R\ttotalCost\x12+\n" +
+	"\x11settlement_digest\x18\x04 \x01(\fR\x10settlementDigest\x12)\n" +
+	"\x10completed_height\x18\x05 \x01(\x04R\x0fcompletedHeight\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\tR\x06status\x12 \n" +
+	"\fbase_tx_hash\x18\a \x01(\fR\n" +
+	"baseTxHash\"\x84\x01\n" +
+	"\vObservation\x12!\n" +
+	"\fsubject_hash\x18\x01 \x01(\fR\vsubjectHash\x12)\n" +
+	"\x10observer_address\x18\x02 \x01(\fR\x0fobserverAddress\x12'\n" +
+	"\x0fobserved_height\x18\x03 \x01(\x04R\x0eobservedHeight\"U\n" +
+	"\vBlockAnchor\x12\x16\n" +
+	"\x06height\x18\x01 \x01(\x04R\x06height\x12.\n" +
+	"\x13previous_block_hash\x18\x02 \x01(\fR\x11previousBlockHashB.Z,github.com/canopy-network/go-plugin/contractb\x06proto3"
 
 var (
 	file_account_proto_rawDescOnce sync.Once
@@ -169,17 +1187,28 @@ func file_account_proto_rawDescGZIP() []byte {
 	return file_account_proto_rawDescData
 }
 
-var file_account_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_account_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_account_proto_goTypes = []any{
-	(*Account)(nil), // 0: types.Account
-	(*Pool)(nil),    // 1: types.Pool
+	(*Account)(nil),          // 0: types.Account
+	(*Pool)(nil),             // 1: types.Pool
+	(*Validator)(nil),        // 2: types.Validator
+	(*EnclaveKey)(nil),       // 3: types.EnclaveKey
+	(*Servicer)(nil),         // 4: types.Servicer
+	(*Assignment)(nil),       // 5: types.Assignment
+	(*RequestRecord)(nil),    // 6: types.RequestRecord
+	(*ExecutionRecord)(nil),  // 7: types.ExecutionRecord
+	(*SettlementRecord)(nil), // 8: types.SettlementRecord
+	(*Observation)(nil),      // 9: types.Observation
+	(*BlockAnchor)(nil),      // 10: types.BlockAnchor
 }
 var file_account_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	5, // 0: types.RequestRecord.assignments:type_name -> types.Assignment
+	7, // 1: types.SettlementRecord.executions:type_name -> types.ExecutionRecord
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_account_proto_init() }
@@ -193,7 +1222,7 @@ func file_account_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_account_proto_rawDesc), len(file_account_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -1,4 +1,5 @@
 {
+  "plugin": "go",
   "logLevel": "debug",
   "chainId": 1,
   "sleepUntil": 0,
@@ -26,7 +27,7 @@
   "externalAddress": "node-1",
   "maxInbound": 21,
   "maxOutbound": 7,
-  "autoUpdate": true,
+  "autoUpdate": false,
   "trustedPeerIDs": null,
   "dialPeers": [],
   "bannedPeerIDs": null,

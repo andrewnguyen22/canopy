@@ -1,4 +1,5 @@
 {
+  "plugin": "go",
   "logLevel": "debug",
   "chainId": 1,
   "sleepUntil": 0,
@@ -24,6 +25,7 @@
   "networkID": 1,
   "listenAddress": "0.0.0.0:9001",
   "externalAddress": "node-2",
+  "autoUpdate": false,
   "maxInbound": 21,
   "maxOutbound": 7,
   "trustedPeerIDs": null,
